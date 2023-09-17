@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body style="background: linear-gradient(rgba(0, 0, 0, 0.7) ,rgba(0, 0, 0, 0.7)),url('./bg.jpg'); background-position: center; background-size: cover; ">
+    <nav class="navbar " style="background-color: rgba(45, 45, 45, 0.44);">
+        <div class="container-fluid">
+          <a class="navbar-brand text-warning" href="#" style="font-size: xx-large; height: 50px;">
+            <B>FILMi!
+            </B>
+          </a>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="row mt-3 ">
+            <div class="col-lg-6 col-sm-12 mt-2">
+                <h2 class="text-light ">FILMi! <i class="fa-solid fa-clapperboard fa-shake fa-lg"></i></h2>
+                <p class="text-light mt-2">
+                    The original list of 100 films was created by an online discussion group comprised of film critics and other movie buffs that was first announced in mid-2004, and has now been updated through the year 2023.
+                    Every year since 2004, additional films were added to the list (and others were dropped), comprising approximately 100 more films that were deemed equally significant. These films are also noted - and highly recommended as well.
+                </p>
+            </div>
+            <div class="col-lg-6 col-sm-12 text-center mt-5">
+                <div class="box border border-2 border-dark  rounded p-3 shadow">
+                    <input type="text" class="form-control " placeholder="Enter movie name" id="nam">
+                    <button class="btn btn-success mt-3" onclick="fetchData()">Search</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-3 ">
+            <div class="col-lg-6 col-sm-12 " id="post" style="display: flex; justify-content: right;"></div>
+            <div class="col-lg-6 col-sm-12 " id="spot" style="display: flex; justify-content: left;">
+
+            </div>
+        </div>
+    </div>
+ 
+
+    <script>
+        function fetchData(){
+            var mname=nam.value;
+            console.log(mname);
+        fetch(`https://www.omdbapi.com/?t=${mname}&apikey=627a5f8`)
+        .then(datas=>datas.json())
+        .then(arraydata=>displayContent(arraydata))
+        .catch(error=>alert('Failed to fetch'))
+       }
+
+        function displayContent(arraydata){
+
+                var poster=arraydata.Poster
+                post.innerHTML=`<div class="card box2" style="width: 18rem; ">
+                                <img src="${poster}" class="card-img-top" alt="...">
+                                </div>`
+
+                var htmlData=`<div class="card box2" style="width: 18rem; background-color: rgba(45, 45, 45, 0.44); color:white">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">${arraydata.Title}</h5>
+                                    <p class="card-text">${arraydata.Plot}</p>
+                                </div>
+                                
+                                <ul class="list-group list-group-flush" >
+                                    <li class="list-group-item" style="width: 18rem; background-color: rgba(45, 45, 45, 0.44); color:white">Language: ${arraydata.Language}</li>
+                                    <li class="list-group-item" style="width: 18rem; background-color: rgba(45, 45, 45, 0.44); color:white">Year: ${arraydata.Year}</li>
+                                    <li class="list-group-item" style="width: 18rem; background-color: rgba(45, 45, 45, 0.44); color:white">Director: ${arraydata.Director}</li>
+                                </ul>
+                                </div
+                            </div>`
+                                
+
+                                spot.innerHTML=htmlData;
+            
+        }
+
+    </script>
+</body>
+</html>
